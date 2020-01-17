@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseMladekModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Abteilung">
+          <Key>
+            <PropertyRef Name="aNummer" />
+          </Key>
+          <Property Name="aNummer" Type="smallint" Nullable="false" />
+          <Property Name="aBeschr" Type="varchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Gehalt">
+          <Key>
+            <PropertyRef Name="gKlasse" />
+          </Key>
+          <Property Name="gKlasse" Type="smallint" Nullable="false" />
+          <Property Name="gBeschr" Type="varchar" MaxLength="16" />
+          <Property Name="gGehalt" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="manNummer" />
+          </Key>
+          <Property Name="manNummer" Type="smallint" Nullable="false" />
+          <Property Name="mitNummer" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Mitarbeiter">
+          <Key>
+            <PropertyRef Name="mitNummer" />
+          </Key>
+          <Property Name="mitNummer" Type="smallint" Nullable="false" />
+          <Property Name="mVorname" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="mNachname" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="gKlasse" Type="smallint" />
+          <Property Name="aNummer" Type="smallint" />
+          <Property Name="tNummer" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="tNummer" />
+          </Key>
+          <Property Name="tNummer" Type="smallint" Nullable="false" />
+          <Property Name="tBeschr" Type="varchar" MaxLength="16" />
+        </EntityType>
+        <Association Name="FK__Manager__mitNumm__6EF57B66">
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="0..1" />
+          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mitarbeiter">
+              <PropertyRef Name="mitNummer" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="mitNummer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mitarbeit__aNumm__6B24EA82">
+          <End Role="Abteilung" Type="Self.Abteilung" Multiplicity="0..1" />
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abteilung">
+              <PropertyRef Name="aNummer" />
+            </Principal>
+            <Dependent Role="Mitarbeiter">
+              <PropertyRef Name="aNummer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mitarbeit__gKlas__6A30C649">
+          <End Role="Gehalt" Type="Self.Gehalt" Multiplicity="0..1" />
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gehalt">
+              <PropertyRef Name="gKlasse" />
+            </Principal>
+            <Dependent Role="Mitarbeiter">
+              <PropertyRef Name="gKlasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mitarbeit__tNumm__6C190EBB">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="tNummer" />
+            </Principal>
+            <Dependent Role="Mitarbeiter">
+              <PropertyRef Name="tNummer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseMladekModelStoreContainer">
+          <EntitySet Name="Abteilung" EntityType="Self.Abteilung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gehalt" EntityType="Self.Gehalt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mitarbeiter" EntityType="Self.Mitarbeiter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Manager__mitNumm__6EF57B66" Association="Self.FK__Manager__mitNumm__6EF57B66">
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mitarbeit__aNumm__6B24EA82" Association="Self.FK__Mitarbeit__aNumm__6B24EA82">
+            <End Role="Abteilung" EntitySet="Abteilung" />
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mitarbeit__gKlas__6A30C649" Association="Self.FK__Mitarbeit__gKlas__6A30C649">
+            <End Role="Gehalt" EntitySet="Gehalt" />
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mitarbeit__tNumm__6C190EBB" Association="Self.FK__Mitarbeit__tNumm__6C190EBB">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseMladekModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Abteilung">
+          <Key>
+            <PropertyRef Name="aNummer" />
+          </Key>
+          <Property Name="aNummer" Type="Int16" Nullable="false" />
+          <Property Name="aBeschr" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mitarbeiter" Relationship="Self.FK__Mitarbeit__aNumm__6B24EA82" FromRole="Abteilung" ToRole="Mitarbeiter" />
+        </EntityType>
+        <EntityType Name="Gehalt">
+          <Key>
+            <PropertyRef Name="gKlasse" />
+          </Key>
+          <Property Name="gKlasse" Type="Int16" Nullable="false" />
+          <Property Name="gBeschr" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="gGehalt" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Mitarbeiter" Relationship="Self.FK__Mitarbeit__gKlas__6A30C649" FromRole="Gehalt" ToRole="Mitarbeiter" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="manNummer" />
+          </Key>
+          <Property Name="manNummer" Type="Int16" Nullable="false" />
+          <Property Name="mitNummer" Type="Int16" />
+          <NavigationProperty Name="Mitarbeiter" Relationship="Self.FK__Manager__mitNumm__6EF57B66" FromRole="Manager" ToRole="Mitarbeiter" />
+        </EntityType>
+        <EntityType Name="Mitarbeiter">
+          <Key>
+            <PropertyRef Name="mitNummer" />
+          </Key>
+          <Property Name="mitNummer" Type="Int16" Nullable="false" />
+          <Property Name="mVorname" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mNachname" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gKlasse" Type="Int16" />
+          <Property Name="aNummer" Type="Int16" />
+          <Property Name="tNummer" Type="Int16" />
+          <NavigationProperty Name="Abteilung" Relationship="Self.FK__Mitarbeit__aNumm__6B24EA82" FromRole="Mitarbeiter" ToRole="Abteilung" />
+          <NavigationProperty Name="Gehalt" Relationship="Self.FK__Mitarbeit__gKlas__6A30C649" FromRole="Mitarbeiter" ToRole="Gehalt" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK__Manager__mitNumm__6EF57B66" FromRole="Mitarbeiter" ToRole="Manager" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__Mitarbeit__tNumm__6C190EBB" FromRole="Mitarbeiter" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="tNummer" />
+          </Key>
+          <Property Name="tNummer" Type="Int16" Nullable="false" />
+          <Property Name="tBeschr" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mitarbeiter" Relationship="Self.FK__Mitarbeit__tNumm__6C190EBB" FromRole="Tasks" ToRole="Mitarbeiter" />
+        </EntityType>
+        <Association Name="FK__Mitarbeit__aNumm__6B24EA82">
+          <End Role="Abteilung" Type="Self.Abteilung" Multiplicity="0..1" />
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abteilung">
+              <PropertyRef Name="aNummer" />
+            </Principal>
+            <Dependent Role="Mitarbeiter">
+              <PropertyRef Name="aNummer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mitarbeit__gKlas__6A30C649">
+          <End Role="Gehalt" Type="Self.Gehalt" Multiplicity="0..1" />
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gehalt">
+              <PropertyRef Name="gKlasse" />
+            </Principal>
+            <Dependent Role="Mitarbeiter">
+              <PropertyRef Name="gKlasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Manager__mitNumm__6EF57B66">
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="0..1" />
+          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mitarbeiter">
+              <PropertyRef Name="mitNummer" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="mitNummer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mitarbeit__tNumm__6C190EBB">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="Mitarbeiter" Type="Self.Mitarbeiter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="tNummer" />
+            </Principal>
+            <Dependent Role="Mitarbeiter">
+              <PropertyRef Name="tNummer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBMladekEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Abteilung" EntityType="Self.Abteilung" />
+          <EntitySet Name="Gehalt" EntityType="Self.Gehalt" />
+          <EntitySet Name="Manager" EntityType="Self.Manager" />
+          <EntitySet Name="Mitarbeiter" EntityType="Self.Mitarbeiter" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" />
+          <AssociationSet Name="FK__Mitarbeit__aNumm__6B24EA82" Association="Self.FK__Mitarbeit__aNumm__6B24EA82">
+            <End Role="Abteilung" EntitySet="Abteilung" />
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mitarbeit__gKlas__6A30C649" Association="Self.FK__Mitarbeit__gKlas__6A30C649">
+            <End Role="Gehalt" EntitySet="Gehalt" />
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Manager__mitNumm__6EF57B66" Association="Self.FK__Manager__mitNumm__6EF57B66">
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mitarbeit__tNumm__6C190EBB" Association="Self.FK__Mitarbeit__tNumm__6C190EBB">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Mitarbeiter" EntitySet="Mitarbeiter" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseMladekModelStoreContainer" CdmEntityContainer="DBMladekEntities">
+          <EntitySetMapping Name="Abteilung">
+            <EntityTypeMapping TypeName="DatabaseMladekModel.Abteilung">
+              <MappingFragment StoreEntitySet="Abteilung">
+                <ScalarProperty Name="aNummer" ColumnName="aNummer" />
+                <ScalarProperty Name="aBeschr" ColumnName="aBeschr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gehalt">
+            <EntityTypeMapping TypeName="DatabaseMladekModel.Gehalt">
+              <MappingFragment StoreEntitySet="Gehalt">
+                <ScalarProperty Name="gKlasse" ColumnName="gKlasse" />
+                <ScalarProperty Name="gBeschr" ColumnName="gBeschr" />
+                <ScalarProperty Name="gGehalt" ColumnName="gGehalt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manager">
+            <EntityTypeMapping TypeName="DatabaseMladekModel.Manager">
+              <MappingFragment StoreEntitySet="Manager">
+                <ScalarProperty Name="manNummer" ColumnName="manNummer" />
+                <ScalarProperty Name="mitNummer" ColumnName="mitNummer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mitarbeiter">
+            <EntityTypeMapping TypeName="DatabaseMladekModel.Mitarbeiter">
+              <MappingFragment StoreEntitySet="Mitarbeiter">
+                <ScalarProperty Name="mitNummer" ColumnName="mitNummer" />
+                <ScalarProperty Name="mVorname" ColumnName="mVorname" />
+                <ScalarProperty Name="mNachname" ColumnName="mNachname" />
+                <ScalarProperty Name="gKlasse" ColumnName="gKlasse" />
+                <ScalarProperty Name="aNummer" ColumnName="aNummer" />
+                <ScalarProperty Name="tNummer" ColumnName="tNummer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="DatabaseMladekModel.Tasks">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="tNummer" ColumnName="tNummer" />
+                <ScalarProperty Name="tBeschr" ColumnName="tBeschr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
